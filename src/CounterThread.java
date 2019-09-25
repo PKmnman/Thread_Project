@@ -1,11 +1,11 @@
 
 public class CounterThread extends Thread {
 
-	private int lowerBound, upperBound;
+	private long lowerBound, upperBound;
 	private int primeCount;
 	private long duration;
 
-	public CounterThread(int lowerBound, int upperBound){
+	public CounterThread(long lowerBound, long upperBound){
 		super();
 		//Min-Max calls make sure the lower bound is the smallest and the upper bound
 		//is the largest of the two values.
@@ -18,7 +18,7 @@ public class CounterThread extends Thread {
 	 * @param n the number to evaluate
 	 * @return {@code true}, if {@code i} is a prime number<br> {@code false}, if otherwise
 	 */
-	private boolean isPrime(int n){
+	private boolean isPrime(Long n){
 		if(n >= 1 && n < 3){
 			//1 and 2 are automatically prime, no need to evaluate that
 			return true;
@@ -52,7 +52,7 @@ public class CounterThread extends Thread {
 		long startTime = System.nanoTime();
 
 		//Loop through range
-		for(int i = lowerBound; i <= upperBound - 1; i++){
+		for(long i = lowerBound; i <= upperBound - 1; i++){
 			//if 'i' is a prime number
 			if(isPrime(i)){
 				primeCount++;

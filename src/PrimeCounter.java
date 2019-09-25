@@ -10,33 +10,33 @@ public class PrimeCounter {
 
 		// Asks the user the number they want to count primes from
 		System.out.print("\nWhat number do you want to count primes from? :");
-		int numOfPrimeLow = in.nextInt();
+		long numOfPrimeLow = in.nextLong();
 		System.out.println();
 
 		// Asks the user the number they want to count primes up to
 		System.out.print("\nWhat number do you want to count primes up to? :");
-		int numOfPrimeHigh = in.nextInt();
+		long numOfPrimeHigh = in.nextLong();
 		System.out.println();
 
-		int totalLowerBound = numOfPrimeLow;
-		int totalUpperBound = numOfPrimeHigh;
-		int totalAmtOfNumbers = totalUpperBound - totalLowerBound;
+		long totalLowerBound = numOfPrimeLow;
+		long totalUpperBound = numOfPrimeHigh;
+		long totalAmtOfNumbers = totalUpperBound - totalLowerBound;
 		int threadCount = threadNum;
 		int leftover = 0;
 		CounterThread[] threadArray = new CounterThread[threadCount];
 
 		// Checks if the division of numbers between the threads is not a whole number
 		double amtOfNumbers = (double)totalAmtOfNumbers/threadCount;
-		leftover = totalAmtOfNumbers % threadCount;
-		int currentNumber = 0;
+		leftover = (int)(totalAmtOfNumbers % threadCount);
+		long currentNumber = 0;
 
 		for (int i = 0; i < threadCount; i++) {
 			if ((i == threadCount-1) && leftover != 0) { //For last thread with leftover numbers
-				int start = currentNumber; //lowerbound
+				long start = currentNumber; //lowerbound
 				threadArray[i] = new CounterThread(start, totalUpperBound);
 			} else { //Not the last thread or has no leftover numbers
-				int start = currentNumber; //lowerbound
-				currentNumber += (int)amtOfNumbers; //upperbound
+				long start = currentNumber; //lowerbound
+				currentNumber += (long)amtOfNumbers; //upperbound
 				threadArray[i] = new CounterThread(start, currentNumber);
 				currentNumber += 1; //Ensures no overlapping of numbers
 			}
