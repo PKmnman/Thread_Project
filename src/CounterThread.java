@@ -15,25 +15,25 @@ public class CounterThread extends Thread {
 
 	/**
 	 * Evaluates whether or not the given integer, {@code i}, is a prime number.
-	 * @param i the number to evaluate
+	 * @param n the number to evaluate
 	 * @return {@code true}, if {@code i} is a prime number<br> {@code false}, if otherwise
 	 */
-	private boolean isPrime(int i){
-		if(i == 1 || i == 2){
+	private boolean isPrime(int n){
+		if(n >= 1 && n < 3){
 			//1 and 2 are automatically prime, no need to evaluate that
 			return true;
 		}
-		if (i % 2 == 0) {
-			//Even numbers are always prime
+		if (n % 2 == 0) {
+			//Even numbers are never prime
 			return false;
 		}
 
 		//if 'i' is prime, return true
 		
 		//When 'i' is greater than or equal to 3 take the squareroot of the number then do the remainder operator, if there is no remainder then the number is not a prime so break.
-		int num = (int)(Math.sqrt(i)+1);
-		for (int j = 2; j <= num ; j++) {
-			if(j == i){
+		int num = (int)(Math.sqrt(n)+1);
+		for (int j = 2; j < num ; j++) {
+			if(j == n){
 				continue;
 			}
 			if (num % j == 0){
@@ -78,4 +78,10 @@ public class CounterThread extends Thread {
 		//Convert to seconds
 		return (duration / 10e8);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Thread %s:%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n", this.getName(), this.getPrimeCount(), this.getDuration());
+	}
+	
 }
