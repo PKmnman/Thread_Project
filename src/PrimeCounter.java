@@ -9,27 +9,30 @@ public class PrimeCounter {
 		int leftover = 0;
 		CounterThread[] threadArray = new CounterThread[threadCount];
 
+		// Checks if the division of numbers between the threads is not a whole number
 		double amtOfNumbers = (double)totalAmtOfNumbers/threadCount;
 		leftover = totalAmtOfNumbers % threadCount;
 		int currentNumber = 0;
 
 		for (int i = 0; i < threadCount; i++) {
-			if ((i == threadCount-1) && leftover != 0) {
-				int start = currentNumber;
+			if ((i == threadCount-1) && leftover != 0) { //For last thread with leftover numbers
+				int start = currentNumber; //lowerbound
 				threadArray[i] = new CounterThread(start, totalUpperBound);
-			} else {
-				int start = currentNumber;
-				currentNumber += (int)amtOfNumbers;
+			} else { //Not the last thread or has no leftover numbers
+				int start = currentNumber; //lowerbound
+				currentNumber += (int)amtOfNumbers; //upperbound
 				threadArray[i] = new CounterThread(start, currentNumber);
-				currentNumber += 1;
+				currentNumber += 1; //Ensures no overlapping of numbers
 			}
 		}
 
+		//Sets names of each thread and starts threads
 		for (int i = 0; i < threadCount; i++) {
 			threadArray[i].setName((i+1) + "");
 			threadArray[i].start();
 		}
 
+		//Joins threads
 		try {
 			for (int i = 0; i < threadCount; i++) {
 				threadArray[i].join();
@@ -38,6 +41,7 @@ public class PrimeCounter {
 			e.printStackTrace();
 		}
 
+		//Prints threads
 		for (int i = 0; i < threadCount; i++) {
 			System.out.println((threadArray[i]));
 		}
