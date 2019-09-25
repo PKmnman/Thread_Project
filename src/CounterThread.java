@@ -31,7 +31,7 @@ public class CounterThread extends Thread {
 		//if 'i' is prime, return true
 		
 		//When 'i' is greater than or equal to 3 take the squareroot of the number then do the remainder operator, if there is no remainder then the number is not a prime so break.
-		int num = (int)(Math.sqrt(n)+1);
+		int num = (int)Math.ceil((Math.sqrt((double)n)));
 		for (int j = 3; j <= num ; j++) {
 			if (n % j == 0){
 				return false;
