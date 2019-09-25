@@ -67,6 +67,6 @@ public class CounterThread extends Thread {
 	 */
 	public double getDuration() {
 		//Convert to seconds
-		return (duration / (10.0 * (10.0 * 8.0)));
+		return (duration / 10e8);
 	}
 }
