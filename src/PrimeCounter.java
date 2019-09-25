@@ -1,13 +1,27 @@
 import java.util.Scanner;
-
 public class PrimeCounter {
 	
 	public static void main(String[] args) {
 
-		int totalLowerBound = 0;
-		int totalUpperBound = 10000;
+		// Asks the user the amount of threads they want to use
+		System.out.print("How many threads would you like to create? : ");
+		Scanner in = new Scanner(System.in);
+		int threadNum = in.nextInt();
+
+		// Asks the user the number they want to count primes from
+		System.out.print("\nWhat number do you want to count primes from? :");
+		int numOfPrimeLow = in.nextInt();
+		System.out.println();
+
+		// Asks the user the number they want to count primes up to
+		System.out.print("\nWhat number do you want to count primes up to? :");
+		int numOfPrimeHigh = in.nextInt();
+		System.out.println();
+
+		int totalLowerBound = numOfPrimeLow;
+		int totalUpperBound = numOfPrimeHigh;
 		int totalAmtOfNumbers = totalUpperBound - totalLowerBound;
-		int threadCount = 3;
+		int threadCount = threadNum;
 		int leftover = 0;
 		CounterThread[] threadArray = new CounterThread[threadCount];
 
@@ -48,37 +62,6 @@ public class PrimeCounter {
 			System.out.println((threadArray[i]));
 		}
 
-		// Asks the user the amount of threads they want to use
-		System.out.print("How many threads would you like to create? : ");
-		Scanner in = new Scanner(System.in);
-		int threadNum = in.nextInt();
-
-		// Asks the user the number they want to count primes up to
-		System.out.print("\nWhat number do you want to count primes up to? :");
-		int numOfPrime = in.nextInt();
-		System.out.println();
-
-
-
-
-		CounterThread t1 = new CounterThread(3, 32000);
-		CounterThread t2 = new CounterThread(4235609, 7899101);
-		
-		t1.setName("1");
-		t2.setName("2");
-		t1.start();
-		t2.start();
-		
-		try {
-			t1.join();
-			t2.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(t1);
-		System.out.println(t2);
-		
 	}
 	
 }
