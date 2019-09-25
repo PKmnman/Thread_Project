@@ -40,7 +40,6 @@ public class PrimeCounter {
 
 		for (int i = 0; i < threadCount; i++) {
 			System.out.println((threadArray[i]));
-			System.out.println();
 		}
 
 
