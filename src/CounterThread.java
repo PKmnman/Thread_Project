@@ -7,9 +7,10 @@ public class CounterThread extends Thread {
 
 	public CounterThread(int lowerBound, int upperBound){
 		super();
-		this.lowerBound = lowerBound;
-		this.upperBound = upperBound;
-		primeCount = 0;
+		//Min-Max calls make sure the lower bound is the smallest and the upper bound
+		//is the largest of the two values.
+		this.lowerBound = Math.min(lowerBound, upperBound);
+		this.upperBound = Math.max(upperBound, lowerBound);
 	}
 
 	/**
@@ -23,6 +24,7 @@ public class CounterThread extends Thread {
 			return true;
 		}
 		if (i % 2 == 0) {
+			//Even numbers are always prime
 			return false;
 		}
 
@@ -40,13 +42,20 @@ public class CounterThread extends Thread {
 		}
 		return true;
 	}
-
+	
+	@Override
+	public synchronized void start() {
+		duration = 0;
+		primeCount = 0;
+		super.start();
+	}
+	
 	@Override
 	public void run() {
 		long startTime = System.nanoTime();
 
 		//Loop through range
-		for(int i = lowerBound; i <= upperBound; i++){
+		for(int i = lowerBound; i <= upperBound - 1; i++){
 			//if 'i' is a prime number
 			if(isPrime(i)){
 				primeCount++;
