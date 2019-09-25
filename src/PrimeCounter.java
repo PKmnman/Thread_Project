@@ -26,6 +26,7 @@ public class PrimeCounter {
 		}
 
 		for (int i = 0; i < threadCount; i++) {
+			threadArray[i].setName((i+1) + "");
 			threadArray[i].start();
 		}
 
@@ -38,7 +39,7 @@ public class PrimeCounter {
 		}
 
 		for (int i = 0; i < threadCount; i++) {
-			printThreadInfo(threadArray[i], i+1);
+			System.out.println((threadArray[i]));
 			System.out.println();
 		}
 
