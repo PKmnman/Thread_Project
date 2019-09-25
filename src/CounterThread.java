@@ -7,43 +7,52 @@ public class CounterThread extends Thread {
 
 	public CounterThread(int lowerBound, int upperBound){
 		super();
-		this.lowerBound = lowerBound;
-		this.upperBound = upperBound;
-		primeCount = 0;
+		//Min-Max calls make sure the lower bound is the smallest and the upper bound
+		//is the largest of the two values.
+		this.lowerBound = Math.min(lowerBound, upperBound);
+		this.upperBound = Math.max(upperBound, lowerBound);
 	}
 
 	/**
 	 * Evaluates whether or not the given integer, {@code i}, is a prime number.
-	 * @param i the number to evaluate
+	 * @param n the number to evaluate
 	 * @return {@code true}, if {@code i} is a prime number<br> {@code false}, if otherwise
 	 */
-	private boolean isPrime(int i){
-		if(i == 1 || i == 2){
+	private boolean isPrime(int n){
+		if(n >= 1 && n < 3){
 			//1 and 2 are automatically prime, no need to evaluate that
 			return true;
 		}
-		if (i % 2 == 0) {
+		if (n % 2 == 0) {
+			//Even numbers are never prime
 			return false;
 		}
 
 		//if 'i' is prime, return true
 		
 		//When 'i' is greater than or equal to 3 take the squareroot of the number then do the remainder operator, if there is no remainder then the number is not a prime so break.
-		int num = (int)(Math.sqrt(i)+1);
-		for (int j = 2; j <= num ; j++) {
-			if (i % j == 0){
+		int num = (int)(Math.sqrt(n)+1);
+		for (int j = 3; j <= num ; j++) {
+			if (n % j == 0){
 				return false;
 			}
 		}
 		return true;
 	}
-
+	
+	@Override
+	public synchronized void start() {
+		duration = 0;
+		primeCount = 0;
+		super.start();
+	}
+	
 	@Override
 	public void run() {
 		long startTime = System.nanoTime();
 
 		//Loop through range
-		for(int i = lowerBound; i <= upperBound; i++){
+		for(int i = lowerBound; i <= upperBound - 1; i++){
 			//if 'i' is a prime number
 			if(isPrime(i)){
 				primeCount++;
@@ -66,4 +75,10 @@ public class CounterThread extends Thread {
 		//Convert to seconds
 		return (duration / 10e8);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Thread %s:%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n", this.getName(), this.getPrimeCount(), this.getDuration());
+	}
+	
 }
