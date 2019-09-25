@@ -1,4 +1,4 @@
-import java.lang.*
+import java.lang.*;
 public class CounterThread extends Thread {
 
 	private int lowerBound, upperBound;
@@ -20,6 +20,9 @@ public class CounterThread extends Thread {
 		if(i == 1 || i == 2){
 			//1 and 2 are automatically prime, no need to evaluate that
 			return true;
+		}
+		if (i % 2 == 0) {
+			return false;
 		}
 
 		//if 'i' is prime, return true
