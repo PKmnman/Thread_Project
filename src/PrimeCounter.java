@@ -33,14 +33,10 @@ public class PrimeCounter {
 		for (int i = 0; i < threadCount; i++) {
 			if ((i == threadCount-1)) { //For last thread
 				long start = currentNumber; //lowerbound
-				System.out.println(start + "");
-				System.out.println(totalUpperBound + "");
 				threadArray[i] = new CounterThread(start, totalUpperBound);
 			} else { //Not the last thread
 				long start = currentNumber; //lowerbound
 				currentNumber += (long)amtOfNumbers; //upperbound
-				System.out.println(start + "");
-				System.out.println(currentNumber + "");
 				threadArray[i] = new CounterThread(start, currentNumber);
 				currentNumber += 1; //Ensures no overlapping of numbers
 			}
