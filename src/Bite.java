@@ -7,10 +7,20 @@ public class Bite {
     private int totalBites;
     private boolean used = false;
 
+
+
+
+
+    private int start;
+    private int end;
+    private int size = end - start;
+
     //Creates a Bite object with a List that starts with the number given to it (start_point) till 25000 after it
-    public Bite(int size,int start_point){
+    public Bite(int start_point,int end_point){
+        this.start = start_point;
+        this.end = end_point;
         work = new ArrayList<>(size);
-        for (int i = start_point; i < start_point + size - 1 ; i++) {
+        for (int i = this.start; i < this.end ; i++) {
             work.add(i);
         }
         totalBites++;
