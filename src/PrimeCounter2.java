@@ -21,7 +21,7 @@ public class PrimeCounter2 extends Thread{
 
         long totalUpperBound = numOfPrimeHigh;
         int threadCount = threadNum;
-        Thread[] threadArrary = new Thread[threadCount];
+        Thread[] threadArray = new Thread[threadCount];
 
 
         int biteInterval = ((int)totalUpperBound / biteSize);
