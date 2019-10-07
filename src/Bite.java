@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-
+// We need to return a range so we can use CounterThread.
+// Needs to update the range after each iteration
 public class Bite {
     //Bite data
     private ArrayList<Integer> work;
