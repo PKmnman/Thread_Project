@@ -68,7 +68,7 @@ public class PrimeCounter {
 		for (int j = 0; j < threadCount; j++) {
 			totalPrimeCount += threadArray[j].getPrimeCount();
 		}
-		System.out.println("Total Ptime Count = " + totalPrimeCount);
+		System.out.println("Total Prime Count = " + totalPrimeCount);
 
 	}
 	
