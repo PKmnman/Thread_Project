@@ -12,6 +12,9 @@ public class CounterThread extends Thread {
 		this.lowerBound = Math.min(lowerBound, upperBound);
 		this.upperBound = Math.max(upperBound, lowerBound);
 	}
+	public CounterThread(){
+
+	}
 
 	/**
 	 * Evaluates whether or not the given integer, {@code i}, is a prime number.
