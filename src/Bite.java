@@ -6,11 +6,6 @@ public class Bite {
     private ArrayList<Integer> work;
     private int totalBites;
     private boolean used = false;
-
-
-
-
-
     private int start;
     private int end;
     private int size = end - start;

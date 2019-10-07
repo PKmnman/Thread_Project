@@ -1,18 +1,47 @@
+import range.Range;
 
-public class CounterThread extends Thread {
+import java.util.concurrent.BrokenBarrierException;
 
-	private long lowerBound, upperBound;
+public class WorkerThread extends Thread{
+	
+	private static int threadID = 1;
+	
+	private Range<Long> work;
+	private WorkAllocator allocator;
 	private int primeCount;
 	private long duration;
-
-	public CounterThread(long lowerBound, long upperBound){
-		super();
-		//Min-Max calls make sure the lower bound is the smallest and the upper bound
-		//is the largest of the two values.
-		this.lowerBound = Math.min(lowerBound, upperBound);
-		this.upperBound = Math.max(upperBound, lowerBound);
+	
+	public WorkerThread(WorkAllocator allocator){
+		super(allocator.getWorkerGroup(), String.format("Worker %d", threadID++));
+		this.allocator = allocator;
 	}
-
+	
+	@Override
+	public void run() {
+		long startTime = System.nanoTime();
+		
+		//While there's work, count primes
+		while ((work = allocator.requestWork()) != null){
+			//Loop through range
+			for (long i = work.low(); i <= work.high(); i++) {
+				//if 'i' is a prime number
+				if (isPrime(i)) {
+					primeCount++;
+				}
+			}
+		}
+		
+		//Store duration
+		duration = (System.nanoTime() - startTime);
+		
+		//Await on barrier
+		try {
+			allocator.getBarrier().await();
+		} catch (InterruptedException | BrokenBarrierException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Evaluates whether or not the given integer, {@code i}, is a prime number.
 	 * @param n the number to evaluate
@@ -27,7 +56,7 @@ public class CounterThread extends Thread {
 			//Even numbers are never prime
 			return false;
 		}
-
+		
 		//if 'i' is prime, return true
 		
 		//When 'i' is greater than or equal to 3 take the squareroot of the number then do the remainder operator, if there is no remainder then the number is not a prime so break.
@@ -40,33 +69,10 @@ public class CounterThread extends Thread {
 		return true;
 	}
 	
-	@Override
-	public synchronized void start() {
-		duration = 0;
-		primeCount = 0;
-		super.start();
-	}
-	
-	@Override
-	public void run() {
-		long startTime = System.nanoTime();
-
-		//Loop through range
-		for(long i = lowerBound; i <= upperBound - 1; i++){
-			//if 'i' is a prime number
-			if(isPrime(i)){
-				primeCount++;
-			}
-		}
-
-		long endTime = System.nanoTime();
-		duration = endTime - startTime;
-	}
-
 	public int getPrimeCount() {
 		return primeCount;
 	}
-
+	
 	/**
 	 * Returns the running duration of the {@link CounterThread#run()} method.
 	 * @return the running duration of this thread
@@ -74,11 +80,6 @@ public class CounterThread extends Thread {
 	public double getDuration() {
 		//Convert to seconds
 		return (duration / 10e8);
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("Thread %s:%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n", this.getName(), this.getPrimeCount(), this.getDuration());
 	}
 	
 }
