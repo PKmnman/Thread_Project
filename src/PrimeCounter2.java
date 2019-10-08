@@ -59,10 +59,14 @@ public class PrimeCounter2 extends Thread{
 
 
         int totalPrimes = 0;
+        int biteUsed = 0;
         for (int i = 0; i < threadArray.length; i++) {
             totalPrimes += threadArray[i].getPrimeCount();
+            biteUsed += threadArray[i].getBiteUsed();
             System.out.println(threadArray[i]);
-            System.out.println("Total Amount of Primes are : " + totalPrimes);
+
         }
+        System.out.println("Total Amount of Primes are : " + totalPrimes);
+        System.out.println("Total Amount of Bites used are : " + biteUsed);
     }
 }

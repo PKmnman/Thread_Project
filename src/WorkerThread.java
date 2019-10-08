@@ -10,6 +10,7 @@ public class WorkerThread extends Thread{
 	private WorkAllocator allocator;
 	private int primeCount;
 	private long duration;
+	private int biteUsed = 0;
 	
 	public WorkerThread(WorkAllocator allocator){
 		super(allocator.getWorkerGroup(), String.format("Worker %d", threadID++));
@@ -23,6 +24,7 @@ public class WorkerThread extends Thread{
 		//While there's work, count primes
 		while ((work = allocator.requestWork()) != null){
 			//Loop through range
+			biteUsed++;
 			for (long i = work.low(); i <= work.high(); i++) {
 				//if 'i' is a prime number
 				if (isPrime(i)) {
@@ -81,9 +83,13 @@ public class WorkerThread extends Thread{
 		//Convert to seconds
 		return (duration / 10e8);
 	}
+	public int getBiteUsed(){
+		return this.biteUsed;
+	}
 
 	public String toString() {
-		return String.format("Thread %s:%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n", this.getName(), this.getPrimeCount(), this.getDuration());
+		return String.format("Thread %s:%n\tNum of Bites: %d%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n",
+				this.getName(),this.biteUsed, this.getPrimeCount(), this.getDuration());
 	}
 	
 }
