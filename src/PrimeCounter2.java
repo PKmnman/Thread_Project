@@ -12,7 +12,7 @@ public class PrimeCounter2 extends Thread{
         Scanner in = new Scanner(System.in);
         int threadNum = in.nextInt();
     
-        System.out.print("\nWhat number do you want to count primes up to? :");
+        System.out.print("\nWhat number do you want to count primes from? :");
         long numOfPrimeLow = in.nextLong();
         System.out.println();
         
@@ -56,5 +56,13 @@ public class PrimeCounter2 extends Thread{
 
         //Output results
         //TODO: Output the results of the counter
+
+
+        int totalPrimes = 0;
+        for (int i = 0; i < threadArray.length; i++) {
+            totalPrimes += threadArray[i].getPrimeCount();
+            System.out.println(threadArray[i]);
+            System.out.println("Total Amount of Primes are : " + totalPrimes);
+        }
     }
 }

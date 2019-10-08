@@ -81,5 +81,9 @@ public class WorkerThread extends Thread{
 		//Convert to seconds
 		return (duration / 10e8);
 	}
+
+	public String toString() {
+		return String.format("Thread %s:%n\tNum of Primes: %d%n\tDuration: %.4f seconds%n", this.getName(), this.getPrimeCount(), this.getDuration());
+	}
 	
 }
